@@ -34,7 +34,7 @@ const withActiveTrip = (WrappedComponent) => {
       return (
         <WrappedComponent
           {...this.props}
-          onTripMouseEnter={this._onSetActiveItem}
+          onTripClick={this._onSetActiveItem}
           onTripMouseOut={this._onSetUnActiveItem}
           current = {this.state.current}
         />

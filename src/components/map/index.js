@@ -1,11 +1,6 @@
 import * as React from 'react';
 import * as leaflet from 'leaflet';
 import './style.scss';
-// import {connect} from 'react-redux';
-
-// import {getCities} from '../../reducer/data/selectors';
-// import {getSelectCity, getPinColor} from '../../reducer/user/selectors';
-// import { FavouriteOfferType } from '../../types';
 
 const icon = leaflet.icon({
   iconUrl: `/img/pin.svg`,
@@ -21,15 +16,7 @@ let map = {
   CENTER: [40.728,-74.032],
 };
 
-// interface Props {
-//   offer: FavouriteOfferType[],
-//   nameCityOnMap: string,
-//   offerCities: string[],
-//   activeCard: FavouriteOfferType,
-//   color: string,
-// }
 let mapMain = null;
-// let city = [];
 
 class Map extends React.Component {
 
@@ -51,12 +38,12 @@ class Map extends React.Component {
     return true;
   }
 
-  // componentWillUpdate(exProps) {
-  //   if (exProps.offer !== this.props.offer) {
-  //     this._init();
-  //   }
-  //   return true;
-  // }
+  componentWillUpdate(exProps) {
+    if (exProps.tripList !== this.props.tripList) {
+      this._init();
+    }
+    return true;
+  }
 
 
   shouldComponentUpdate() {
@@ -70,27 +57,17 @@ class Map extends React.Component {
 
   _init() {
     const {tripList,
-      //  activeTrip
+       activeTrip
     } = this.props;
+
+    // console.log(`init map`)
+    // console.log(activeTrip)
 
     if (this.props.tripList.length > 0) {
       if (this.mapRef.current) {
-        // if (nameCityOnMap !== ``) {
-        //   let coordOffer = tripList.filter((it) => it.city.name === nameCityOnMap).slice(0, 1);
 
-        //   const offerCoordCity = [coordOffer[0].location.latitude, coordOffer[0].location.longitude];
-        //   city = offerCoordCity;
-        // } else {
-        //   let coordOffer = offer.filter((it) => it.city.name === this.props.offerCities[0]).slice(0, 1);
-
-        //   const offerCoordCity = [coordOffer[0].city.location.latitude, coordOffer[0].city.location.longitude];
-        //   city = offerCoordCity;
-        // }
-
-        // const city = [40.7287448,-74.0321082];
         const zooms = map.ZOOM;
         const center = map.CENTER;
-
 
         mapMain = leaflet.map(this.mapRef.current, {
           center: center,
@@ -113,27 +90,29 @@ class Map extends React.Component {
 
 
         for (let i = 0; i < tripList.length; i++) {
-          // if (activetrip) {
-          //   leaflet
-          //     .marker([tripList[i].startStationLatitude, tripList[i].startStationLongitude],
-          //         {
-          //           icon: offer[i].id === activeCard.id ?
-          //             activeIcon
-          //             : icon
-          //         }).addTo(mapMain);
-          //   leaflet
-          //     .marker([tripList[i].endStationLatitude, tripList[i].endStationLongitude],
-          //         {
-          //           icon: tripList[i].id === activeCard.id ?
-          //             activeIcon
-          //             : icon
-          //         }).addTo(mapMain);
-          // } else {
+          if (activeTrip && tripList[i].bikeid === activeTrip.bikeid) {
+            console.log(activeTrip.bikeid);
+            leaflet
+              .marker([tripList[i].startStationLatitude, tripList[i].startStationLongitude],
+                  {
+                    // icon: tripList[i].bikeid === activeTrip.bikeid ?
+                      activeIcon
+                      // : icon
+                  }).addTo(mapMain);
+            leaflet
+              .marker([tripList[i].endStationLatitude, tripList[i].endStationLongitude],
+                  {
+                    // icon: tripList[i].id === activeTrip.id ?
+                      activeIcon
+                      // : icon
+                  }).addTo(mapMain);
+          } else {
+            console.log(`not active`);
             leaflet
               .marker([tripList[i].startStationLatitude, tripList[i].startStationLongitude], {icon}).addTo(mapMain)
             leaflet
               .marker([tripList[i].endStationLatitude, tripList[i].endStationLongitude], {icon}).addTo(mapMain);
-          // }
+          }
         }
       }
     }
@@ -151,13 +130,3 @@ class Map extends React.Component {
 }
 
 export default Map;
-
-// const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-//   offerCities: getCities(state),
-//   nameCityOnMap: getSelectCity(state),
-//   color: getPinColor(state),
-// });
-
-// export default connect(
-//     mapStateToProps
-// )(Map);

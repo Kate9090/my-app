@@ -7,9 +7,13 @@ import {ActionCreator} from '../../reducer/user/user';
 
 const TripInfo = (props) =>  {
 
-  const {data, onTripMouseEnter, onTripMouseOut} = props;
+  const {data, onTripClick, onTripMouseEnter, onTripMouseOut} = props;
 
-  return <div className="trip-block" onMouseOver={onTripMouseEnter} onMouseOut={onTripMouseOut}>
+  const _handleClick = () => {
+    onTripClick(data);
+  }
+
+  return <div className="trip-block" onMouseEnter={_handleClick} onMouseOut={onTripMouseOut}>
     <ul>
       <li>Начало поездки: #{data.starttime}</li>
       <li>Конец поездки: #{data.stoptime}</li>
@@ -27,7 +31,7 @@ export {TripInfo};
 // });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMouseOver: (trip) => {
+  onTripClick: (trip) => {
     dispatch(ActionCreator.showActiveTrip(trip));
   },
 });
