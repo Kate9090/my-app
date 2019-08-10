@@ -1,11 +1,15 @@
 import React from 'react';
-import './style.scss'
+import './style.scss';
+
+
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../reducer/user/user';
 
 const TripInfo = (props) =>  {
 
-  const {data} = props;
+  const {data, onTripMouseEnter, onTripMouseOut} = props;
 
-  return <div className="trip-block">
+  return <div className="trip-block" onMouseOver={onTripMouseEnter} onMouseOut={onTripMouseOut}>
     <ul>
       <li>Начало поездки: #{data.starttime}</li>
       <li>Конец поездки: #{data.stoptime}</li>
@@ -17,4 +21,16 @@ const TripInfo = (props) =>  {
 
 }
 
-export default TripInfo;
+export {TripInfo};
+
+// const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+// });
+
+const mapDispatchToProps = (dispatch) => ({
+  onMouseOver: (trip) => {
+    dispatch(ActionCreator.showActiveTrip(trip));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(TripInfo);
+
