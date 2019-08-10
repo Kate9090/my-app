@@ -1,6 +1,7 @@
 import React from 'react';
 import dataTrip from './mock/trip-data';
-import ListTrip from './components/list-trip'
+import ListTrip from './Components/List-Trip';
+import Map from './Components/Map'
 import './App.css';
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <ListTrip dataTrip={data} />
+      <Map tripList={data} />
     </div>
   );
 }

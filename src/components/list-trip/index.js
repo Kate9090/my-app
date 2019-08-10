@@ -1,21 +1,20 @@
 import React from 'react';
-import Trip from ''
+import TripInfo from '../../Components/Trip-Info'
+import './style.scss'
 
 const ListTrip = (props) =>  {
 
   const {dataTrip} = props;
   console.log(dataTrip.length);
 
-  return (
-      <div>
-        {dataTrip.map((item, i) => (
-          <Trip data={dataTrip[i]} key={`trip-`+ i}/>
-        )
-      )}
-      </div>
+  return <div className="list">
+    {dataTrip.map((item, i) => (
+      <TripInfo data={dataTrip[i]} key={`trip-`+ i}/>
     )
+    )};
+  </div>
+
 
 }
-
 
 export default ListTrip;

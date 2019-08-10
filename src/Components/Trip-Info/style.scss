@@ -1,0 +1,15 @@
+li {
+  list-style: none;
+  text-align: left;
+}
+
+.trip-block {
+  max-height: 100vh;
+  overflow-y: scroll;
+  border: 1px solid lightcoral;
+  border-radius: 5px;
+
+  &:hover {
+    background: lightcoral;
+  }
+}
