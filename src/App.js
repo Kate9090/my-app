@@ -4,17 +4,20 @@ import ListTrip from './Components/List-Trip';
 import Map from './Components/Map'
 import './App.css';
 
+import withActiveTrip from './hoc/with-active-trip'
+
 import {connect} from 'react-redux';
 import {getActiveTrip} from './reducer/user/selectors';
 
 
 const App = (props) => {
+  const WrappedListTrip = withActiveTrip(ListTrip);
   const {activeTripData} = props;
   const data = dataTrip;
 
   return (
     <div className="App">
-      <ListTrip dataTrip={data} />
+      <WrappedListTrip dataTrip={data} />
       <Map tripList={data} activeTrip={activeTripData} />
     </div>
   );
