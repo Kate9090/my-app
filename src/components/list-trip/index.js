@@ -6,14 +6,11 @@ import './style.scss'
 
 const ListTrip = (props) =>  {
   const WrappedTripInfo = withActiveTrip(TripInfo);
-
-
-  const {dataTrip} = props;
-  console.log(dataTrip.length);
+  const {dataTrip, onTripClick} = props;
 
   return <div className="list">
     {dataTrip.map((item, i) => (
-      <WrappedTripInfo data={dataTrip[i]} key={`trip-`+ i}/>
+      <WrappedTripInfo onTripClick={onTripClick} data={dataTrip[i]} key={`trip-`+ i}/>
     )
     )};
   </div>;

@@ -1,15 +1,23 @@
 li {
   list-style: none;
   text-align: left;
+
+  &.start-color {
+    color: #80f0ad;
+  }
+
+  &.finish-color {
+    color: #ee80f0;
+  }
 }
 
 .trip-block {
   max-height: 100vh;
   overflow-y: scroll;
-  border: 1px solid lightcoral;
+  border: 1px solid #d5e8eb;
   border-radius: 5px;
 
   &:hover {
-    background: lightcoral;
+    background: #d5e8eb;
   }
 }

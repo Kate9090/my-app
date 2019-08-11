@@ -6,15 +6,16 @@ const icon = leaflet.icon({
   iconUrl: `/img/pin.svg`,
   iconSize: [10, 12]
 });
-const activeIcon = leaflet.icon({
-  iconUrl: `/img/pin-active.svg`,
-  iconSize: [30, 30]
-});
 
-const activeIconFinish = leaflet.icon({
-  iconUrl: `/img/pin-active-finish.svg`,
-  iconSize: [30, 30]
-});
+// const activeIconPin = leaflet.icon({
+//   iconUrl: `/img/pin-active.svg`,
+//   iconSize: [30, 30]
+// });
+
+// const activeIconFinish = leaflet.icon({
+//   iconUrl: `/img/pin-active-finish.svg`,
+//   iconSize: [30, 30]
+// });
 
 let map = {
   ZOOM: 13,
@@ -30,26 +31,18 @@ class Map extends React.Component {
     this.mapRef = React.createRef();
   }
 
-  componentDidMount() {
-    try {
-      if (mapMain) {
-        mapMain.remove();
-      }
-      this._init();
-    } catch (err) {
-      return true;
-    }
+  // componentDidMount() {
+  //   try {
+  //     if (mapMain) {
+  //       mapMain.remove();
+  //     }
+  //     this._init();
+  //   } catch (err) {
+  //     return true;
+  //   }
 
-    return true;
-  }
-
-  componentWillUpdate(exProps) {
-    if (exProps.tripList !== this.props.tripList) {
-      this._init();
-    }
-    return true;
-  }
-
+  //   return true;
+  // }
 
   shouldComponentUpdate() {
     if (mapMain) {
@@ -61,18 +54,23 @@ class Map extends React.Component {
   }
 
   _init() {
-    const {tripList,
-       activeTrip
-    } = this.props;
-
-    // console.log(`init map`)
-    // console.log(activeTrip)
+    const {tripList, activeTrip} = this.props;
 
     if (this.props.tripList.length > 0) {
       if (this.mapRef.current) {
 
         const zooms = map.ZOOM;
         const center = map.CENTER;
+
+        const activeIconPin = leaflet.icon({
+          iconUrl: `/img/pin-active.svg`,
+          iconSize: [50*activeTrip.tripduration/1000, 60*activeTrip.tripduration/1000]
+        });
+
+        const activeIconFinish = leaflet.icon({
+          iconUrl: `/img/pin-active-finish.svg`,
+          iconSize: [50*activeTrip.tripduration/1000, 60*activeTrip.tripduration/1000]
+        });
 
         mapMain = leaflet.map(this.mapRef.current, {
           center: center,
@@ -96,20 +94,26 @@ class Map extends React.Component {
 
         for (let i = 0; i < tripList.length; i++) {
           if (activeTrip && tripList[i].bikeid === activeTrip.bikeid && tripList[i].tripduration === activeTrip.tripduration) {
-            console.log(`bikeid is ` + activeTrip.bikeid);
+            console.log(`bikeid is ` + tripList[i].tripduration);
             leaflet
               .marker([tripList[i].startStationLatitude, tripList[i].startStationLongitude],
                   {
-                    // icon: tripList[i].bikeid === activeTrip.bikeid ?
-                      activeIcon
-                      // : icon
-                  }).addTo(mapMain);
+                    icon: activeIconPin
+                  })
+              .bindTooltip(tripList[i].startStationName,
+                {
+                    permanent: true,
+                    direction: 'right'
+                })
+              .addTo(mapMain);
             leaflet
               .marker([tripList[i].endStationLatitude, tripList[i].endStationLongitude],
                   {
-                    // icon: tripList[i].id === activeTrip.id ?
-                    activeIconFinish
-                      // : icon
+                    icon: activeIconFinish
+                  }).bindTooltip(tripList[i].endStationName,
+                  {
+                      permanent: true,
+                      direction: 'right'
                   }).addTo(mapMain);
           } else {
             console.log(`not active`);
@@ -124,11 +128,8 @@ class Map extends React.Component {
   }
 
   render() {
-    const {tripList} = this.props;
 
-    return <section
-      className="map" id="map" ref={this.mapRef}
-    >
+    return <section className="map" id="map" ref={this.mapRef}>
     </section>;
   }
 
