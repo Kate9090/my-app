@@ -11,6 +11,11 @@ const activeIcon = leaflet.icon({
   iconSize: [30, 30]
 });
 
+const activeIconFinish = leaflet.icon({
+  iconUrl: `/img/pin-active-finish.svg`,
+  iconSize: [30, 30]
+});
+
 let map = {
   ZOOM: 13,
   CENTER: [40.728,-74.032],
@@ -90,8 +95,8 @@ class Map extends React.Component {
 
 
         for (let i = 0; i < tripList.length; i++) {
-          if (activeTrip && tripList[i].bikeid === activeTrip.bikeid) {
-            console.log(activeTrip.bikeid);
+          if (activeTrip && tripList[i].bikeid === activeTrip.bikeid && tripList[i].tripduration === activeTrip.tripduration) {
+            console.log(`bikeid is ` + activeTrip.bikeid);
             leaflet
               .marker([tripList[i].startStationLatitude, tripList[i].startStationLongitude],
                   {
@@ -103,7 +108,7 @@ class Map extends React.Component {
               .marker([tripList[i].endStationLatitude, tripList[i].endStationLongitude],
                   {
                     // icon: tripList[i].id === activeTrip.id ?
-                      activeIcon
+                    activeIconFinish
                       // : icon
                   }).addTo(mapMain);
           } else {
