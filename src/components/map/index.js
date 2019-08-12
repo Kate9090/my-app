@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as leaflet from 'leaflet';
 import './style.scss';
+import {connect} from 'react-redux';
+import {getActiveTrip} from '../../reducer/user/selectors';
 
 const icon = leaflet.icon({
   iconUrl: `/img/pin.svg`,
@@ -45,6 +47,8 @@ class Map extends React.Component {
 
   _init() {
     const {tripList, activeTrip} = this.props;
+
+    console.log(`activeTrip from map ` + activeTrip.tripduration);
     if (this.mapRef.current) {
 
       const zooms = map.ZOOM;
@@ -116,4 +120,12 @@ class Map extends React.Component {
 
 }
 
-export default Map;
+export {Map};
+
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  activeTrip: getActiveTrip(state),
+});
+
+export default connect(
+  mapStateToProps
+)(Map);

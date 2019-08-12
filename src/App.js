@@ -15,15 +15,19 @@ const App = (props) => {
   const {activeTripData} = props;
   const data = dataTrip;
 
+  console.log(`activeTrip from app ` + activeTripData.tripduration);
+
   return (
     <div className="App">
       <WrappedListTrip dataTrip={data} />
-      <Map tripList={data} activeTrip={activeTripData} />
+      <Map tripList={data}
+       activeTrip={activeTripData}
+        />
     </div>
   );
 }
 
-export {App};
+export  {App};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   activeTripData: getActiveTrip(state),
