@@ -1,6 +1,6 @@
 const dataTrip = [
   {
-    "tripduration": 932,
+    "tripduration": 532,
     "starttime": "2018-01-01 02:06:17.5410",
     "stoptime": "2018-01-01 02:21:50.0270",
     "start station id": 3183,

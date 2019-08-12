@@ -6,13 +6,13 @@ import {ActionCreator} from '../../reducer/user/user';
 
 const TripInfo = (props) =>  {
 
-  const _handleMouseEnter = (data) => {
-    // console.log(`mouseenter ` + data.tripduration);
+  const _handleMouseEnter = (e, data) => {
+    e.preventDefault();
     props.onTripClick(data);
   }
   const {data, onTripMouseOut} = props;
 
-  return <div className="trip-block" onMouseEnter={() => _handleMouseEnter(data)} onMouseOut={onTripMouseOut}>
+  return <div className="trip-block" onMouseEnter={(evt) => _handleMouseEnter(evt, data)} onMouseOut={onTripMouseOut}>
     <ul>
       <li>Начало поездки: {data.starttime}</li>
       <li>Конец поездки: {data.stoptime}</li>

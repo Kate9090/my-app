@@ -21,6 +21,8 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
+    this._init();
+
   }
 
   componentDidMount() {
@@ -49,6 +51,7 @@ class Map extends React.Component {
     const {tripList, activeTrip} = this.props;
 
     console.log(`activeTrip from map ` + activeTrip.tripduration);
+
     if (this.mapRef.current) {
 
       const zooms = map.ZOOM;
@@ -68,7 +71,7 @@ class Map extends React.Component {
         center: center,
         zoom: zooms,
         scrollWheelZoom: true,
-        zoomControl: false,
+        zoomControl: true,
         marker: true,
       });
 
