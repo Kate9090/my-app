@@ -25,12 +25,12 @@ class Map extends React.Component {
 
   }
 
-  componentDidMount() {
+  componentDidMount(activeTrip) {
     try {
       if (mapMain) {
         mapMain.remove();
       }
-      this._init();
+      this._init(activeTrip);
     } catch (err) {
       return true;
     }
@@ -49,9 +49,6 @@ class Map extends React.Component {
 
   _init() {
     const {tripList, activeTrip} = this.props;
-
-    console.log(`activeTrip from map ` + activeTrip.tripduration);
-
     if (this.mapRef.current) {
 
       const zooms = map.ZOOM;
