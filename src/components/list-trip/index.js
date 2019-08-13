@@ -16,5 +16,3 @@ const ListTrip = (props) =>  {
 }
 
 export default ListTrip;
-
-
