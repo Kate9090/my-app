@@ -21,7 +21,6 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
-    // this._init();
 
   }
 
@@ -140,7 +139,7 @@ class Map extends React.Component {
 export {Map};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  // activeTrip: getActiveTrip(state),
+  activeTrip: getActiveTrip(state),
 });
 
 export default connect(
