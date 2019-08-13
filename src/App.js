@@ -5,7 +5,7 @@ import Map from './Components/Map'
 import './App.css';
 
 
-const App = (props) => {
+const App = () => {
 
   const data = dataTrip;
   return (
