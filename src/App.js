@@ -4,16 +4,29 @@ import ListTrip from './Components/List-Trip';
 import Map from './Components/Map'
 import './App.css';
 
-const App = () => {
+import {connect} from 'react-redux';
+import {getActiveTrip} from './reducer/user/selectors';
+
+
+const App = (props) => {
+  const {activeTrip} = props;
+  console.log(`in app ` + activeTrip.tripduration)
 
   const data = dataTrip;
   return (
     <div className="App">
       <ListTrip dataTrip={data} />
-      <Map tripList={data}
-        />
+      <Map tripList={data} activeTrip={activeTrip} />
     </div>
   );
 }
 
-export  default App;
+export {App};
+
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  activeTrip: getActiveTrip(state),
+});
+
+export default connect(
+  mapStateToProps
+)(App);

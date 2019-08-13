@@ -21,11 +21,26 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
-    this._init();
+    // this._init();
 
   }
 
-  componentDidMount(activeTrip) {
+  activeTrip = this.props;
+
+  componentDidMount() {
+    try {
+      if (mapMain) {
+        mapMain.remove();
+      }
+      this._init();
+    } catch (err) {
+      return true;
+    }
+
+    return true;
+  }
+
+  componentDidUpdate(activeTrip) {
     try {
       if (mapMain) {
         mapMain.remove();
@@ -38,17 +53,19 @@ class Map extends React.Component {
     return true;
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(activeTrip) {
     if (mapMain) {
       mapMain.remove();
     }
 
-    this._init();
+    this._init(activeTrip);
     return true;
   }
 
   _init() {
     const {tripList, activeTrip} = this.props;
+
+    console.log(`in map ` + activeTrip.tripduration)
     if (this.mapRef.current) {
 
       const zooms = map.ZOOM;
@@ -123,7 +140,7 @@ class Map extends React.Component {
 export {Map};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeTrip: getActiveTrip(state),
+  // activeTrip: getActiveTrip(state),
 });
 
 export default connect(
